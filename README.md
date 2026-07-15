@@ -1,24 +1,11 @@
-# 🎬 CineMatch - 영화 검색 & 추천 플랫폼 (Movie Search & Recommendation Platform)
+# 🎬 CineMatch 
+영화 검색 & 추천 플랫폼 (Movie Search & Recommendation Platform)
 
-> 실시간 영화 데이터를 활용하여 개인 맞춤형 영화를 검색하고 추천해주는 웹 서비스입니다.
-> A web service that searches and recommends personalized movies using real-time movie data.
+>  TMDB(The Movie Database) API를 활용하여 영화 검색과 추천 플랫폼을 설계하는 것에 초점을 맞췄다.
+> 사용자는 키워드 기반으로 찾고 싶은 영화를 검색하여 정보를 얻을 수 있고, 원하는 장르, 배우, 검색한 영화, 평점을 기반으로 영화를 추천받을 수 있다.
+> 또한 사용자 리뷰 기능을 추가하여 사용자들이 자신의 의견을 공유하고 다른 사용자와 교류할 수 있도록 했다.
 
 ---
 
 ## 📄 프로젝트 보고서 (Project Report)
-* 💡 **[CineMatch 프로젝트 보고서 (PDF) 보기](./CineMatch_Report.pdf)** 👈 여기를 클릭하면 작성된 보고서로 이동합니다!
-
----
-
-## 📌 1. 프로젝트 소개 (Introduction)
-* 파이썬 웹 프로그래밍 과제로 제작한 영화 검색 및 추천 웹 애플리케이션입니다.
-* 사용자가 선호하는 장르나 키워드에 맞는 영화를 쉽게 찾을 수 있도록 도와줍니다.
-
-## 🛠️ 2. 기술 스택 & 개발 환경 (Tech Stack)
-* **Framework**: Django (Python)
-* **Libraries**: requests, python-decouple
-* **Database**: SQLite
-
-## 🚀 3. 주요 기능 (Features)
-* 실시간 영화 데이터 검색 및 상세 정보 조회
-* 사용자 취향 맞춤형 영화 추천 기능
+* 💡 **[CineMatch 프로젝트 보고서 (PDF) 보기](./CineMatch_Report.pdf)** 👈 클릭하면 작성된 보고서로 이동
