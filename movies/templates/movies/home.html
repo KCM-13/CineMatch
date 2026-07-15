@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+CineMatch - 영화 검색
+{% endblock %}
+
+{% block content %}
+<style>
+    /* 전체 배경에 그라데이션 적용 */
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #e6f7ff, #bee1ff); 
+        height: 100vh; /* 화면 전체 높이 */
+    }
+</style>
+
+<!-- CineMatch 텍스트와 검색 폼 -->
+<div style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <h1 style="font-size: 36px; color: #333; margin-bottom: 20px;">CineMatch</h1>
+    <form action="{% url 'search_movies' %}" method="get" style="display: flex; align-items: center; justify-content: center;">
+        <!-- 입력창 -->
+        <input type="text" name="query" placeholder="영화 제목을 입력하세요" 
+               style="width: 300px; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px 0 0 5px;">
+
+        <!-- 검색 버튼 -->
+        <button type="submit" style="width: 40px; height: 40px; background-color: #0575d7; color: white; border: none; border-radius: 0 5px 5px 0; cursor: pointer;">
+            🔍
+        </button>
+    </form>
+</div>
+{% endblock %}

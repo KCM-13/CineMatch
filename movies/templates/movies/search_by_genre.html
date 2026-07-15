@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+장르 검색
+{% endblock %}
+
+{% block content %}
+<style>
+    /* 전체 배경에 그라데이션 적용 */
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #e6f7ff, #bee1ff); 
+        height: 100vh; /* 화면 전체 높이 */
+    }
+</style>
+
+<div style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <h1 style="font-size: 24px; color: #333; margin-bottom: 20px;">추천받고 싶은 장르 입력</h1>
+    <form action="{% url 'genre_results' %}" method="get" style="display: flex; flex-direction: column; align-items: center;">
+        <input type="text" name="genre" placeholder="예: 드라마, 액션, 코미디" 
+               style="width: 300px; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
+        <button type="submit" style="width: 320px; padding: 10px; font-size: 16px; background-color: #0575d7; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            검색
+        </button>
+    </form>
+</div>
+{% endblock %}

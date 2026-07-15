@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CineMatch{% endblock %}</title>
+    <style>
+
+        /* 상단바 스타일 */
+        nav {
+            background-color: #ffffff; /* 상단바는 흰색 */
+            padding: 15px 20px; /* 내부 여백 추가 */
+            border-bottom: 1px solid #ddd;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            height: 40px; 
+        }
+
+        /* 메뉴 왼쪽 */
+        .menu-left {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%); /* 수직 가운데 정렬 */
+            display: flex;
+            gap: 15px;
+        }
+
+        /* 드롭다운 컨테이너 */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* 드롭다운 메뉴 */
+        .dropdown-content {
+            display: none; 
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        /* 드롭다운 메뉴 항목 */
+        .dropdown-content a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 8px 16px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* 드롭다운 메뉴 표시 */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* 메뉴 중앙 */
+        .menu-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 중앙 정렬 */
+        }
+
+        /* 메뉴 오른쪽 */
+        .menu-right {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%); /* 수직 가운데 정렬 */
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* 링크 스타일 */
+        nav a {
+            text-decoration: none;
+            color: #0575d7;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            margin-top: 60px; 
+        }
+    </style>
+</head>
+<body>
+    <!-- 상단바 -->
+    <nav>
+        <!-- 왼쪽 메뉴 -->
+        <div class="menu-left">
+            <a href="{% url 'popular_movies' %}">인기 영화 보기</a>
+
+            <!-- 드롭다운 메뉴 -->
+            <div class="dropdown">
+                <span style="cursor: pointer; color: #0575d7; font-weight: bold;">영화 추천 받기</span>
+                <div class="dropdown-content">
+                    <a href="{% url 'search_by_genre' %}" style="color: #333; font-weight: bold;">장르</a>
+                    <a href="{% url 'search_by_actor' %}" style="color: #333; font-weight: bold;">배우</a>
+                    <a href="{% url 'recommend_movies' %}" style="color: #333; font-weight: bold;">검색 영화 기반</a>
+                    <a href="{% url 'top_rated_movies' %}" style="color: #333; font-weight: bold;">평점 높은 영화</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 중앙 로고 -->
+        <div class="menu-center">
+            <a href="{% url 'home' %}" style="text-decoration: none; color: #333; font-size: 20px;">CineMatch</a>
+        </div>
+
+        <!-- 오른쪽 텍스트 -->
+        <div class="menu-right">
+            영화 검색&추천 플랫폼
+        </div>
+    </nav>
+
+    <!-- 페이지 내용 -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

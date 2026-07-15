@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ movie.title }} - 영화 상세 정보
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #e6f7ff;
+    }
+
+    .movie-detail {
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 800px;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    img {
+        display: block;
+        margin: 20px auto;
+        border-radius: 10px;
+    }
+
+    h1, h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    .divider {
+        border-top: 2px solid #ddd;
+        margin: 40px 0;
+    }
+
+    form {
+        margin: 20px auto;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    form label {
+        display: block;
+        margin-top: 10px;
+    }
+
+    form input, form textarea, form select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    form button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #0575d7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+
+    form button:hover {
+        background-color: #0456a3;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    ul li {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+    }
+
+    .review-card {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        margin-bottom: 15px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .review-card strong {
+        font-size: 16px;
+        color: #007bff;
+    }
+
+    .review-card p {
+        margin: 5px 0;
+        color: #555;
+    }
+
+    .review-card .rating {
+        font-weight: bold;
+    }
+
+    .sort-options {
+        text-align: right;
+        margin-bottom: 20px;
+    }
+
+    .sort-options select {
+        padding: 5px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .pagination span {
+        margin: 0 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .pagination span.active {
+        font-weight: bold;
+        text-decoration: underline;
+        color: black;
+    }
+
+    .pagination a span {
+        color: lightgray;
+    }
+</style>
+
+<div class="movie-detail">
+    <!-- 영화 상세 정보 -->
+    <h1>{{ movie.title }}</h1>
+    <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.title }}">
+    <p><strong>개봉일:</strong> {{ movie.release_date }}</p>
+    <p><strong>평점:</strong> {{ movie.vote_average }}</p>
+    <p><strong>줄거리:</strong> {{ movie.overview }}</p>
+
+    <!-- 구분선 -->
+    <div class="divider"></div>
+
+    <!-- 리뷰 작성 -->
+    <h2>리뷰 작성</h2>
+    <form action="{% url 'add_review' movie.id %}" method="post">
+        {% csrf_token %}
+        <label for="username">이름:</label>
+        <input type="text" name="username" id="username" placeholder="이름 (선택 사항)">
+
+        <label for="text">리뷰:</label>
+        <textarea name="text" id="text" rows="4" placeholder="리뷰를 작성하세요"></textarea>
+
+        <label for="rating">평점:</label>
+        <select name="rating" id="rating">
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+        <button type="submit">리뷰 작성</button>
+    </form>
+
+    <!-- 구분선 -->
+    <div class="divider"></div>
+
+    <!-- 작성된 리뷰 -->
+    <h2 id="reviews-section">작성된 리뷰</h2>
+
+    <!-- 리뷰 정렬 옵션 -->
+    <div class="sort-options">
+        <form action="#reviews-section" method="get">
+            <select name="sort" onchange="this.form.submit()">
+                <option value="latest" {% if sort == 'latest' %}selected{% endif %}>최신순</option>
+                <option value="highest" {% if sort == 'highest' %}selected{% endif %}>높은 평점순</option>
+                <option value="lowest" {% if sort == 'lowest' %}selected{% endif %}>낮은 평점순</option>
+            </select>
+        </form>
+    </div>
+
+    <ul>
+        {% for review in reviews %}
+        <li class="review-card">
+            <strong>{{ review.username }}</strong> ({{ review.created_at|date:"Y-m-d H:i" }})
+            <p class="rating">평점: {{ review.rating }} / 5</p>
+            <p>{{ review.text }}</p>
+        </li>
+        {% empty %}
+        <li>아직 리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요!</li>
+        {% endfor %}
+    </ul>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+        {% for page_num in reviews.paginator.page_range %}
+            {% if reviews.number == page_num %}
+                <span class="active">{{ page_num }}</span>
+            {% else %}
+                <a href="?page={{ page_num }}&sort={{ sort }}#reviews-section"><span>{{ page_num }}</span></a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
